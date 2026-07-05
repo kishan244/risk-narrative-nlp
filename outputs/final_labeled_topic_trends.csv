@@ -1,0 +1,50 @@
+company,year,Clean_Label,count
+apple,2019,Competition Risk,43
+apple,2019,Currency & International Risk,2
+apple,2019,Financial & Tax Risk,4
+apple,2020,Competition Risk,45
+apple,2020,Currency & International Risk,2
+apple,2020,Financial & Tax Risk,4
+apple,2021,Competition Risk,51
+apple,2021,Currency & International Risk,2
+apple,2021,Financial & Tax Risk,4
+apple,2022,Competition Risk,53
+apple,2022,Currency & International Risk,2
+apple,2022,Financial & Tax Risk,4
+apple,2023,Competition Risk,52
+apple,2023,Currency & International Risk,2
+apple,2023,Financial & Tax Risk,3
+apple,2024,Competition Risk,53
+apple,2024,Currency & International Risk,2
+apple,2024,Financial & Tax Risk,4
+jpmorgan,2019,Currency & International Risk,4
+jpmorgan,2019,Financial & Tax Risk,84
+jpmorgan,2020,Currency & International Risk,4
+jpmorgan,2020,Financial & Tax Risk,66
+jpmorgan,2022,Currency & International Risk,4
+jpmorgan,2022,Financial & Tax Risk,86
+jpmorgan,2023,Currency & International Risk,1
+jpmorgan,2023,Financial & Tax Risk,84
+jpmorgan,2024,Financial & Tax Risk,92
+tesla,2019,Competition Risk,9
+tesla,2019,Financial & Tax Risk,3
+tesla,2019,Operational Risk,13
+tesla,2020,Competition Risk,10
+tesla,2020,Currency & International Risk,1
+tesla,2020,Financial & Tax Risk,4
+tesla,2020,Operational Risk,7
+tesla,2021,Competition Risk,2
+tesla,2021,Financial & Tax Risk,57
+tesla,2021,Operational Risk,1
+tesla,2022,Competition Risk,14
+tesla,2022,Currency & International Risk,1
+tesla,2022,Financial & Tax Risk,4
+tesla,2022,Operational Risk,6
+tesla,2023,Competition Risk,14
+tesla,2023,Currency & International Risk,2
+tesla,2023,Financial & Tax Risk,3
+tesla,2023,Operational Risk,5
+tesla,2024,Competition Risk,12
+tesla,2024,Currency & International Risk,1
+tesla,2024,Financial & Tax Risk,4
+tesla,2024,Operational Risk,7

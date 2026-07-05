@@ -1,0 +1,24 @@
+=== MODEL EVALUATION REPORT ===
+
+Evaluation Metrics:
+
+Total text chunks analyzed: 1499
+Usable clustered chunks: 1312
+Outlier chunks: 187
+Outlier rate: 12.47%
+Number of discovered topics: 11
+Automatically labeled topic coverage: 45.45%
+Number of reporting years analyzed: 6
+Number of final risk themes: 4
+
+Interpretation:
+
+- The outlier rate is low, indicating that most text chunks were successfully assigned to meaningful topics.
+- Topic labeling coverage is limited, suggesting that more topic labels or domain-specific keywords may be needed.
+- The model produces interpretable temporal risk themes, supporting its use for semantic evolution analysis.
+
+Limitations:
+
+- The model is unsupervised, so topic quality depends on clustering and representation quality.
+- Topic labels are generated using an automatic keyword-based mapping layer.
+- Results should be interpreted as analytical support, not as legal or financial advice.

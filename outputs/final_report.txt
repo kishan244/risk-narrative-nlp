@@ -1,0 +1,50 @@
+=== FINAL AI RISK ANALYSIS REPORT ===
+
+Method Summary:
+
+The system extracted Risk Factors sections from annual report PDFs, split the text into semantic chunks, generated transformer-based sentence embeddings, applied BERTopic for topic discovery, and analyzed topic frequency across reporting years.
+
+Key Findings:
+
+- Strongest increasing theme: Competition Risk (52 → 65).
+- Strongest decreasing theme: Operational Risk (13 → 7).
+- Highest observed topic intensity: Financial & Tax Risk in 2024 with frequency 100.
+
+Detailed Topic Trends:
+
+Competition Risk
+  Start year value: 52
+  End year value: 65
+  Trend: increasing
+  Peak year: 2022
+  Interpretation: Competition Risk became more prominent over time, indicating stronger emphasis on this risk area in later annual reports.
+
+Currency & International Risk
+  Start year value: 6
+  End year value: 3
+  Trend: decreasing
+  Peak year: 2020
+  Interpretation: Currency & International Risk declined over time, indicating reduced relative emphasis within the risk narrative.
+
+Financial & Tax Risk
+  Start year value: 91
+  End year value: 100
+  Trend: increasing
+  Peak year: 2024
+  Interpretation: Financial & Tax Risk became more prominent over time, indicating stronger emphasis on this risk area in later annual reports.
+
+Operational Risk
+  Start year value: 13
+  End year value: 7
+  Trend: decreasing
+  Peak year: 2019
+  Interpretation: Operational Risk declined over time, indicating reduced relative emphasis within the risk narrative.
+
+Overall Summary:
+
+- Increasing themes: Competition Risk, Financial & Tax Risk.
+- Decreasing themes: Operational Risk, Currency & International Risk.
+
+Academic Conclusion:
+
+The analysis demonstrates that transformer-based topic modeling can identify semantic shifts in corporate risk narratives over time. The results show that risk disclosures are not static; instead, different risk themes increase, decrease, or stabilize across reporting years. This supports the use of NLP-driven temporal topic modeling as a method for analyzing annual report risk disclosures.

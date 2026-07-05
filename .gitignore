@@ -1,0 +1,19 @@
+# Raw SEC filings (large, third-party PDFs — not published)
+data/raw pdf/
+
+# Draft / exploration scripts (kept local, not published)
+experiments/
+
+# Python
+__pycache__/
+*.pyc
+
+# macOS
+.DS_Store
+
+# Virtual environment / secrets
+venv/
+.env
+
+# Local tooling config
+.claude/

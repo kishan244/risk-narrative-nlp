@@ -1,0 +1,103 @@
+=== SEMANTIC EVOLUTION EVIDENCE REPORT ===
+
+Comparison period: 2019 to 2024
+Companies analyzed: Apple, JPMorgan, Tesla
+
+
+==============================
+COMPANY: APPLE
+==============================
+
+
+--- Competition Risk ---
+
+2019 representative text:
+markets are characterized by frequent product introductions and rapid technological advances that have substantially increased the capabilities and use of smartphones, personal computers, tablets and other electronic devices. Many of the Company’s competitors that sell mobile devices and personal computers based on other operating systems seek to compete primarily through aggressive pricing and very low cost structures. Principal competitive factors important to the Company include price, product and service features (including security features), relative price and performance, product and service quality and reliability, design innovation, a strong third-party software and accessories ecosystem, marketing and distribution capability, service and support, and corporate reputation. The Company is focused on expanding its market opportunities related to smartphones, personal computers, ta...
+
+2024 representative text:
+that have significant technical, marketing, distribution and other resources, as well as established hardware, software and digital content supplier relationships. In addition, some of the Company’s competitors have broader product lines, lower-priced products and a larger installed base of active devices. Competition has been particularly intense as competitors have aggressively cut prices and lowered product margins. Certain competitors have the resources, experience or cost structures to provide products at little or no profit or even at a loss. Some of the markets in which the Company competes have from time to time experienced little to no growth or contracted overall. Additionally, the Company faces significant competition as competitors imitate the Company’s product features and applications within their products or collaborate to offer solutions that are more competitive than tho...
+
+Semantic shift interpretation:
+The risk narrative remains focused on competitive pressure, rapid technological change, pricing pressure, product innovation, and market share challenges.
+
+
+--- Currency & International Risk ---
+
+2019 representative text:
+stock price may decline significantly, which could have a material adverse impact on investor confidence and employee retention. The Company’s financial performance is subject to risks associated with changes in the value of the U.S. dollar relative to local currencies. The Company’s primary exposure to movements in foreign currency exchange rates relates to non–U.S. dollar–denominated sales, cost of sales and operating expenses worldwide. Gross margins on the Company’s products in foreign countries and on products that include components obtained from foreign suppliers could be materially adversely affected by foreign currency exchange rate fluctuations. The weakening of foreign currencies relative to the U.S. dollar adversely affects the U.S. dollar value of the Company’s foreign currency–denominated sales and earnings, and generally leads the Company to raise international pricing, po...
+
+2024 representative text:
+currencies. The Company’s primary exposure to movements in foreign exchange rates relates to non–U.S. dollar–denominated sales, cost of sales and operating expenses worldwide. Gross margins on the Company’s products in foreign countries and on products that include components obtained from foreign suppliers have in the past been adversely affected and could in the future be materially adversely affected by foreign exchange rate fluctuations. The weakening of foreign currencies relative to the U.S. dollar adversely affects the U.S. dollar value of the Company’s foreign currency–denominated sales and earnings, and generally leads the Company to raise international pricing, potentially reducing demand for the Company’s products. In some circumstances, for competitive or other reasons, the Company may decide not to raise international pricing to offset the U.S. dollar’s strengthening, which ...
+
+Semantic shift interpretation:
+The narrative emphasizes exposure to foreign exchange movements, U.S. dollar strength, international pricing decisions, and global sales sensitivity.
+
+
+--- Financial & Tax Risk ---
+
+2019 representative text:
+These risk factors may be important to understanding other statements in this Form 10-K. The following information should be read in conjunction with Part II, Item 7, “Management’s Discussion and Analysis of Financial Condition and Results of Operations” and the consolidated financial statements and accompanying notes in Part II, Item 8, “Financial Statements and Supplementary Data” of this Form 10-K. The business, financial condition and operating results of the Company can be affected by a number of factors, whether currently known or unknown, including but not limited to those described below, any one or more of which could, directly or indirectly, cause the Company’s actual financial condition and operating results to vary materially from past, or from anticipated future, financial condition and operating results. Any of these factors, in whole or in part, could materially and advers...
+
+2024 representative text:
+and governance matters, and details related to the Company’s annual meeting of shareholders. The information contained on the websites referenced in this Form 10-K is not incorporated by reference into this filing. Further, the Company’s references to website URLs are intended to be inactive textual references only. Item 1A. Risk Factors The Company’s business, reputation, results of operations, financial condition and stock price can be affected by a number of factors, whether currently known or unknown, including those described below. When any one or more of these risks materialize from time to time, the Company’s business, reputation, results of operations, financial condition and stock price can be materially and adversely affected. Because of the following factors, as well as other factors affecting the Company’s results of operations and financial condition, past financial perform...
+
+Semantic shift interpretation:
+The narrative highlights exposure to stock price volatility, tax uncertainty, investment risk, revenue pressure, and financial performance expectations.
+
+
+==============================
+COMPANY: JPMORGAN
+==============================
+
+
+--- Financial & Tax Risk ---
+
+2019 representative text:
+basis starts, in each with the performance of its relevant competitors. Refer to case, with the reported U.S. GAAP results and includes Business Segment Results on pages 60–78 for additional certain reclassifications to present total net revenue for the information on these non-GAAP measures. Non-GAAP Firm (and each of the reportable business segments) on an financial measures used by the Firm may not be comparable FTE basis. Accordingly, revenue from investments that to similarly named non-GAAP financial measures used by receive tax credits and tax-exempt securities is presented in other companies. the managed results on a basis comparable to taxable investments and securities. These financial measures allow The following summary table provides a reconciliation from the Firm’s reported U.S. GAAP results to managed basis. 2019 2018 2017 Year ended Fully taxable- Fully taxable- Fully taxa...
+
+2024 representative text:
+business segment, as the case may be, of the lines of business on a managed basis. The Firm’s and therefore facilitate a comparison of the Firm or the definition of managed basis starts, in each case, with business segment with the performance of its relevant the reported U.S. GAAP results and includes certain competitors. Refer to Business Segment & Corporate reclassifications to present total net revenue for the Results on pages 70–90 for additional information on Firm as a whole, and for each of the reportable these non-GAAP measures. Non-GAAP financial business segments and Corporate, on an FTE basis. measures used by the Firm may not be comparable to Accordingly, revenue from investments that receive similarly named non-GAAP financial measures used by tax credits and tax-exempt securities is presented in other companies. the managed results on a basis comparable to taxable investmen...
+
+Semantic shift interpretation:
+The narrative highlights exposure to stock price volatility, tax uncertainty, investment risk, revenue pressure, and financial performance expectations.
+
+
+==============================
+COMPANY: TESLA
+==============================
+
+
+--- Competition Risk ---
+
+2019 representative text:
+unfavorable and uncertain regulatory, political, economic, tax and labor conditions, and with establishing ourselves in new markets, all of which could harm our business. We have a global footprint with domestic and international operations and subsidiaries. Accordingly, we are subject to a variety of legal, political and regulatory requirements and social, environmental and economic conditions over which we have little control. For example, we may be impacted by trade policies, environmental conditions, political uncertainty and economic cycles involving geographic regions where we have significant operations, which are inherently unpredictable. We are subject to a number of risks associated in particular with international business activities that may increase our costs, impact our ability to sell our products and require significant management attention. These risks include conforming...
+
+2024 representative text:
+there can be no assurance that a safety issue or fire related to the cells would not disrupt our operations. Any such disruptions or issues may harm our brand and business. We face risks associated with maintaining and expanding our international operations, including unfavorable and uncertain regulatory, political, economic, tax and labor conditions. We are subject to legal and regulatory requirements, political uncertainty and social, environmental and economic conditions in numerous jurisdictions, including markets in which we generate significant sales, over which we have little control and which are inherently unpredictable. Our operations in such jurisdictions, particularly as a company based in the U.S., with additional manufacturing operations in China and Europe, create risks relating to conforming our products to regulatory and safety requirements and charging and other electri...
+
+Semantic shift interpretation:
+The risk narrative remains focused on competitive pressure, rapid technological change, pricing pressure, product innovation, and market share challenges.
+
+
+--- Financial & Tax Risk ---
+
+2019 representative text:
+Risk Factors 15 Item 1B. Unresolved Staff Comments 34 Item 2. Properties 35 Item 3. Legal Proceedings 35 Item 4. Mine Safety Disclosures 35 PART II. Item 5. Market for Registrant’s Common Equity, Related Stockholder Matters and Issuer Purchases of Equity Securities 36 Item 6. Selected Consolidated Financial Data 38 Item 7. Management’s Discussion and Analysis of Financial Condition and Results of Operations 39 Item 7A. Quantitative and Qualitative Disclosures About Market Risk 60 Item 8. Financial Statements and Supplementary Data 61 Item 9. Changes in and Disagreements with Accountants on Accounting and Financial Disclosure 127 Item 9A. Controls and Procedures 127 Item 9B. Other Information 128 PART III. Item 10. Directors, Executive Officers and Corporate Governance 129 Item 11. Executive Compensation 129 Item 12. Security Ownership of Certain Beneficial Owners and Management and Relat...
+
+2024 representative text:
+Risk Factors 13 Item 1B. Unresolved Staff Comments 27 Item 1C. Cybersecurity 28 Item 2. Properties 29 Item 3. Legal Proceedings 29 Item 4. Mine Safety Disclosures 29 PART II. Item 5. Market for Registrant's Common Equity, Related Stockholder Matters and Issuer Purchases of Equity Securities 30 Item 6. [Reserved] 31 Item 7. Management's Discussion and Analysis of Financial Condition and Results of Operations 32 Item 7A. Quantitative and Qualitative Disclosures about Market Risk 44 Item 8. Financial Statements and Supplementary Data 45 Item 9. Changes in and Disagreements with Accountants on Accounting and Financial Disclosure 91 Item 9A. Controls and Procedures 91 Item 9B. Other Information 92 Item 9C. Disclosure Regarding Foreign Jurisdictions that Prevent Inspections 92 PART III. Item 10. Directors, Executive Officers and Corporate Governance 93 Item 11. Executive Compensation 93 Item 1...
+
+Semantic shift interpretation:
+The narrative highlights exposure to stock price volatility, tax uncertainty, investment risk, revenue pressure, and financial performance expectations.
+
+
+--- Operational Risk ---
+
+2019 representative text:
+other costs of ownership. In furtherance of our mission to accelerate the world’s transition to sustainable energy, we have also developed an expertise in solar energy systems. We sell and lease retrofit solar energy systems for residential and commercial customers, and alternatively provide certain customers with access to our solar energy systems through power purchase or subscription-based arrangements. We also offer the Solar Roof, which features attractive and durable glass roof tiles integrated with solar energy generation. Our approach to the solar business emphasizes simplicity, standardization and accessibility to make it easy and cost-effective for customers to adopt clean energy, while reducing our customer acquisition costs. Finally, we have leveraged our technological expertise in batteries, energy management, power electronics, and integrated systems from our vehicle powert...
+
+2024 representative text:
+Texas, differentiates us from our competitors. We are also applying our artificial intelligence learnings from self-driving technology to the field of robotics, such as through Optimus, a robotic humanoid in development, which is controlled by the same AI system. 3 Table of Contents Energy Generation and Storage Energy Storage Products We leverage many of the component-level technologies from our vehicles in our energy storage products. By taking a modular approach to the design of battery systems, we can optimize manufacturing capacity of our energy storage products. Additionally, our expertise in power electronics enables our battery systems to interconnect with electricity grids while providing fast-acting systems for power injection and absorption. We have also developed software to remotely control and dispatch our energy storage systems. Solar Energy Systems We have engineered Sola...
+
+Semantic shift interpretation:
+The narrative shows continued dependence on business operations and later includes stronger emphasis on macroeconomic uncertainty, disruptions, inflation, and execution risk.
