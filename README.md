@@ -17,6 +17,17 @@ This project is an **NLP semester project** built to explore whether transformer
 
 The current dataset used for development covers **Apple, JPMorgan, and Tesla, 2019–2024**, chosen to compare risk narratives across very different industries (consumer tech, banking, EV/auto manufacturing).
 
+## Key results
+
+| | |
+|---|---|
+| Reports analysed | 17 annual reports (10-K): Apple, JPMorgan, Tesla, 2019–2024 (JPMorgan 2021 not available) |
+| Text chunks | 1,499 (≈180 words each, max 100 per report) |
+| Risk categories | 8, auto-labelled from BERTopic topics |
+| Strongest rise | Competition risk: 52 → 65 mentions |
+| Strongest fall | Operational risk: 13 → 7 mentions |
+| Highest intensity | Financial & tax risk in 2024 (100) |
+
 ## Pipeline
 
 The end-to-end flow, as implemented in `main.py`:
@@ -125,7 +136,7 @@ All generated artifacts are written to `outputs/`:
 
 ![Risk theme evolution chart](outputs/final_topic_evolution_chart.png)
 
-*Replace with a screenshot of your preferred chart from `outputs/` — the topic evolution chart or heatmap tends to be the most visually compelling for a README.*
+![Risk theme heatmap](outputs/final_topic_heatmap.png)
 
 ## Limitations
 
