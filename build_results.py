@@ -8,7 +8,7 @@ import os
 import numpy as np
 import pandas as pd
 from sklearn.linear_model import LogisticRegression
-from sklearn.model_selection import KFold, cross_val_predict
+from sklearn.model_selection import GroupKFold, cross_val_predict
 
 from src.classify import MODEL_NAME, load_model
 from src.prototypes import PROTOTYPES
@@ -21,6 +21,22 @@ NAMES = list(CATEGORIES)
 def prototype_scores(emb, model):
     protos = [model.encode(PROTOTYPES[n] + [CATEGORIES[n]], normalize_embeddings=True) for n in NAMES]
     return np.stack([(emb @ p.T).max(1) for p in protos], axis=1)
+
+
+def near_duplicate_groups(vectors, threshold=0.9):
+    sim = vectors @ vectors.T
+    group = list(range(len(vectors)))
+
+    def find(i):
+        while group[i] != i:
+            i = group[i]
+        return i
+
+    for i in range(len(vectors)):
+        for j in range(i + 1, len(vectors)):
+            if sim[i, j] >= threshold:
+                group[find(j)] = find(i)
+    return [find(i) for i in range(len(vectors))]
 
 
 def accuracy(pred, truth):
@@ -48,7 +64,10 @@ def main():
     labelled = pd.concat([dev, test], ignore_index=True)
     X = np.hstack([emb[labelled["index"]], scores[labelled["index"]] * 3])
     y = labelled["label"].to_numpy(dtype=object)
-    cv_pred = cross_val_predict(LogisticRegression(C=4, max_iter=5000), X, y, cv=KFold(10, shuffle=True, random_state=0))
+    # near-identical passages (same paragraph repeated in another year) must stay in the same fold,
+    # otherwise the model is tested on text it has already seen
+    groups = near_duplicate_groups(emb[labelled["index"]])
+    cv_pred = cross_val_predict(LogisticRegression(C=4, max_iter=5000), X, y, cv=GroupKFold(10), groups=groups)
     lr_cv = accuracy(cv_pred, y)
 
     use_lr = lr_cv > zs_test
@@ -69,6 +88,12 @@ def main():
     # share of each risk category per report (introductions left out)
     risk = chunks[~chunks["category"].isin(NON_RISK)]
     share = risk.groupby(["company", "year", "category"]).size().rename("chunks").reset_index()
+    # every company/year/category combination, with 0 where a category is absent
+    full = pd.MultiIndex.from_product(
+        [share["company"].unique(), sorted(share["year"].unique()), sorted(share["category"].unique())],
+        names=["company", "year", "category"],
+    )
+    share = share.set_index(["company", "year", "category"]).reindex(full, fill_value=0).reset_index()
     share["share"] = share["chunks"] / share.groupby(["company", "year"])["chunks"].transform("sum")
 
     # new language: passages in the latest report least similar to anything in the first report
@@ -90,6 +115,7 @@ def main():
         "method": method,
         "test_accuracy": headline,
         "test_n": headline_n,
+        "dup_groups": len(set(groups)),
         "test_baseline": float(labelled["label"].value_counts(normalize=True).iloc[0]),
         "test_top2": float(np.mean(top2_hit)),
         "dev_accuracy": zs_dev,

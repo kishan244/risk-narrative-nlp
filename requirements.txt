@@ -1,5 +1,5 @@
-# Live app only (Streamlit Community Cloud installs this file)
-streamlit==1.50.0
-pandas==2.3.3
-plotly==6.3.1
-pyarrow==21.0.0
+# Live app only (Streamlit Community Cloud installs this file). Versions tested on Python 3.13.
+streamlit==1.66.1
+pandas==3.0.5
+plotly==7.1.0
+pyarrow==26.0.0
