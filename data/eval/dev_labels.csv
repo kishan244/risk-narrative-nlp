@@ -1,0 +1,60 @@
+ticker,year,chunk_id,label
+AAPL,2025,11,Product & Technology
+AAPL,2020,20,Regulatory & Legal
+AAPL,2022,31,Regulatory & Legal
+AAPL,2020,29,Cybersecurity & Data Privacy
+AAPL,2021,38,Competition & Demand
+AAPL,2021,17,Product & Technology
+AAPL,2025,7,Operational & Business Continuity
+AAPL,2025,0,General / Introduction
+AAPL,2020,0,General / Introduction
+AAPL,2021,3,Macroeconomic & Market
+AAPL,2021,31,Regulatory & Legal
+AAPL,2021,7,Operational & Business Continuity
+AAPL,2025,15,Product & Technology
+AAPL,2022,38,Regulatory & Legal
+AAPL,2025,19,Competition & Demand
+AAPL,2021,13,Supply Chain & Manufacturing
+AAPL,2019,3,Competition & Demand
+AAPL,2023,12,Supply Chain & Manufacturing
+AAPL,2025,43,Regulatory & Legal
+AAPL,2025,24,Cybersecurity & Data Privacy
+JPM,2023,24,Macroeconomic & Market
+JPM,2022,15,Regulatory & Legal
+JPM,2020,42,Regulatory & Legal
+JPM,2019,60,Competition & Demand
+JPM,2022,31,Credit & Liquidity
+JPM,2019,53,Regulatory & Legal
+JPM,2021,61,Operational & Business Continuity
+JPM,2022,40,Credit & Liquidity
+JPM,2020,73,Competition & Demand
+JPM,2025,19,Macroeconomic & Market
+JPM,2022,39,Regulatory & Legal
+JPM,2025,18,International & Geopolitical
+JPM,2020,26,Macroeconomic & Market
+JPM,2025,58,Competition & Demand
+JPM,2022,48,Operational & Business Continuity
+JPM,2020,81,Regulatory & Legal
+JPM,2023,51,Cybersecurity & Data Privacy
+JPM,2021,40,Regulatory & Legal
+JPM,2024,34,Credit & Liquidity
+JPM,2025,67,Regulatory & Legal
+TSLA,2024,18,Product & Technology
+TSLA,2023,28,Cybersecurity & Data Privacy
+TSLA,2023,21,Macroeconomic & Market
+TSLA,2024,23,People & Key Personnel
+TSLA,2021,42,International & Geopolitical
+TSLA,2019,52,Credit & Liquidity
+TSLA,2025,37,Credit & Liquidity
+TSLA,2019,31,Regulatory & Legal
+TSLA,2023,27,Operational & Business Continuity
+TSLA,2025,5,Supply Chain & Manufacturing
+TSLA,2023,6,Competition & Demand
+TSLA,2022,34,Credit & Liquidity
+TSLA,2020,34,Product & Technology
+TSLA,2023,45,Cybersecurity & Data Privacy
+TSLA,2025,24,Credit & Liquidity
+TSLA,2023,0,General / Introduction
+TSLA,2023,52,Stock & Governance
+TSLA,2024,4,Supply Chain & Manufacturing
+TSLA,2021,48,Regulatory & Legal
