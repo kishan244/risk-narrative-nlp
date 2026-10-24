@@ -38,14 +38,18 @@ def extract_risk_section(text):
     The table of contents also says "Item 1A Risk Factors", but the section
     after it is tiny, so the longest candidate is the real one.
     """
-    starts = [m.end() for m in START.finditer(text)]
+    starts = list(START.finditer(text))
     best = ""
-    for end in END.finditer(text):
-        # the closest "Item 1A" heading before this "Item 1B/1C/2" heading
-        before = [s for s in starts if s < end.start()]
-        if not before:
+    for i, m in enumerate(starts):
+        # the section stops at the first "Item 1B / 1C / 2" heading,
+        # or at the next "Item 1A" heading (a cross-reference is not the section)
+        end = END.search(text, m.end())
+        if not end:
             continue
-        candidate = text[before[-1]: end.start()]
+        stop = end.start()
+        if i + 1 < len(starts):
+            stop = min(stop, starts[i + 1].start())
+        candidate = text[m.end(): stop]
         if len(candidate) > len(best):
             best = candidate
     return best.strip()

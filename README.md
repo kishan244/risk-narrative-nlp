@@ -1,145 +1,70 @@
-# Semantic Evolution of Corporate Risk Narratives in Annual Reports
+# Risk Radar: how companies' risk language changes over time
 
-A transformer-based NLP pipeline that extracts the Risk Factors section from corporate 10-K annual reports and analyzes how risk themes evolve over time, using sentence embeddings and BERTopic topic modeling.
+**Live demo:** _link added after deploy_
 
-## Overview
+An end-to-end NLP pipeline that downloads 10-K annual reports from **SEC EDGAR**, extracts the *Item 1A Risk Factors* section, sorts every passage into one of **12 risk categories**, and shows how each company's risk mix changed from **2019 to 2025** in a Streamlit app.
 
-Every public company's annual report (10-K) contains a "Risk Factors" section describing what could hurt the business. These sections change year to year as new risks (cybersecurity, supply chain, macro conditions) rise and fall in prominence — but reading six years of filings across multiple companies by hand doesn't scale.
-
-This project is an **NLP semester project** built to explore whether transformer-based topic modeling can automatically surface and track that evolution. Given a set of 10-K filings for a company across multiple years, the pipeline:
-
-- extracts just the Risk Factors section from each PDF
-- splits it into semantic chunks and embeds them with a sentence-transformer model
-- clusters the embeddings into topics with BERTopic
-- maps discovered topics to human-readable risk categories (e.g. Cybersecurity & Privacy, Supply Chain, Competition)
-- tracks how each risk theme's frequency changes across years and companies
-- generates charts and written reports summarizing the findings
-
-The current dataset used for development covers **Apple, JPMorgan, and Tesla, 2019–2024**, chosen to compare risk narratives across very different industries (consumer tech, banking, EV/auto manufacturing).
+Companies: **Apple, JPMorgan Chase, Tesla** (a phone maker, a bank and a car maker, so the method has to work across very different industries).
 
 ## Key results
 
 | | |
 |---|---|
-| Reports analysed | 17 annual reports (10-K): Apple, JPMorgan, Tesla, 2019–2024 (JPMorgan 2021 not available) |
-| Text chunks | 1,499 (≈180 words each, max 100 per report) |
-| Risk categories | 8, auto-labelled from BERTopic topics |
-| Strongest rise | Competition risk: 52 → 65 mentions |
-| Strongest fall | Operational risk: 13 → 7 mentions |
-| Highest intensity | Financial & tax risk in 2024 (100) |
+| Reports analysed | 21 official 10-K filings (3 companies × 7 fiscal years, 2019–2025) |
+| Passages | 1,287 (~200 words each, split on paragraph and sentence borders) |
+| Classifier accuracy | **69%** in 10-fold cross-validation on 118 hand-labelled passages (most-common-class baseline: 25%) |
+| Apple | Regulatory & legal risk grew the most: **17% → 32%** of the risk section |
+| Tesla | Product & technology risk up **+10 points** (FSD, robotaxi, Optimus); supply-chain risk down **−7 points** |
+| JPMorgan | Cybersecurity up **+6 points**; 2025 report adds new language on generative and agentic AI |
+
+Shares, not raw counts, are used everywhere, so a longer report does not look "riskier" just because it is longer.
 
 ## Pipeline
 
-The end-to-end flow, as implemented in `main.py`:
-
-1. **PDF text extraction** (`pipeline.py`) — Each 10-K PDF is read page-by-page with `pdfplumber` and concatenated into a single text blob.
-
-2. **Risk Factors section extraction** (`pipeline.py`) — The text is searched for "Item 1A – Risk Factors" heading patterns (several variants are matched to handle formatting differences across filers) and sliced out up to the start of "Item 1B" / "Item 1C" / "Item 2". A fallback skips false positives from the table of contents by requiring a minimum section length.
-
-3. **Chunking** (`pipeline.py`) — The extracted Risk Factors text is split into ~180-word chunks (`CHUNK_SIZE`), discarding chunks under 80 words (`MIN_WORDS_PER_CHUNK`). To keep longer filings (e.g. JPMorgan's) from dominating the topic model, each report contributes at most 100 chunks (`MAX_CHUNKS_PER_REPORT`).
-
-4. **Embedding + topic modeling** (`pipeline.py`) — Each chunk is embedded using the `all-MiniLM-L6-v2` sentence-transformer model, then clustered with **BERTopic**, using a custom-configured **UMAP** (dimensionality reduction) and **HDBSCAN** (density-based clustering) model underneath it.
-
-5. **Automatic topic labeling** (`pipeline.py`) — Each discovered topic's keyword representation is scored against a hand-defined keyword dictionary for 8 risk categories (Cybersecurity & Privacy, Supply Chain, Operational, Competition, Financial & Tax, Currency & International, Product Quality, Trade & Vendor) and assigned the best-matching label, or "Unclassified Risk" if nothing matches well.
-
-6. **Temporal aggregation & reporting** (`report_generator.py`) — Labeled topic frequencies are grouped by company/year/theme to identify which risk themes are increasing, decreasing, or stable over the 2019–2024 window, written out as a plain-text findings report.
-
-7. **Semantic shift analysis** (`semantic_shift.py`) — For each company and risk theme, the pipeline pulls a representative text chunk from 2019 and a representative chunk from 2024 (selected by keyword-match score) and pairs them side by side as qualitative evidence of how the language around that risk theme actually changed.
-
-8. **Visualization** (`final_visuals.py`) — Generates a multi-line topic evolution chart, a risk-theme intensity heatmap, a per-company risk theme comparison bar chart, and a risk narrative volume trend chart, all via `matplotlib`.
-
-9. **Evaluation** (`evaluation.py`) — Reports basic model diagnostics: outlier rate (chunks that didn't cluster into any topic), number of discovered topics, automatic label coverage, and number of years/themes covered — framed honestly as unsupervised-model diagnostics, not accuracy metrics.
-
-## Tech Stack
-
-- **pdfplumber** — PDF text extraction
-- **sentence-transformers** (`all-MiniLM-L6-v2`) — semantic embeddings
-- **BERTopic** — topic modeling
-- **UMAP** (`umap-learn`) — dimensionality reduction (used as BERTopic's clustering backbone)
-- **HDBSCAN** — density-based clustering (used as BERTopic's clustering backbone)
-- **pandas** — data wrangling and aggregation
-- **matplotlib** — charts and visualizations
-
-## Data
-
-**The raw 10-K PDFs are not included in this repository** (they're excluded via `.gitignore` — SEC filings are large binary files and third-party content, not something to vendor into a public repo).
-
-To run the pipeline yourself, download the Risk Factors–containing 10-K filings for the companies/years you want to analyze from **SEC EDGAR** (https://www.sec.gov/edgar) and place them in the following structure:
-
-```text
-data/raw pdf/
-├── apple/
-│   ├── apple_2019.pdf
-│   ├── apple_2020.pdf
-│   ├── apple_2021.pdf
-│   ├── apple_2022.pdf
-│   ├── apple_2023.pdf
-│   └── apple_2024.pdf
-├── jpmorgan/
-│   ├── jpmorgan_2019.pdf
-│   ├── ...
-│   └── jpmorgan_2024.pdf
-└── tesla/
-    ├── tesla_2019.pdf
-    ├── ...
-    └── tesla_2024.pdf
+```
+SEC EDGAR ──► build_chunks.py ──► embed_all.py ──► build_results.py ──► app.py (Streamlit)
+  10-K HTML     Item 1A text,       bge-base          classify, shares,     5 interactive views
+                ~200-word chunks    embeddings        new language, metrics
 ```
 
-Notes on the expected structure:
-- Company folder names just need to contain a recognizable alias (e.g. `apple`, `aapl`; `jpmorgan`, `jpm`, `chase`; `tesla`, `tsla`) — matching is case-insensitive and ignores punctuation/spacing.
-- Within each company folder, files are expected as `<company>_<year>.pdf` (e.g. `apple_2021.pdf`); if that exact name isn't found, the pipeline falls back to any PDF in the folder whose name contains the year.
-- The companies and year range analyzed are configured in `config.py` (`COMPANIES`, `YEARS`) — edit these to point the pipeline at different companies or years.
+1. **Download** (`src/sec_fetch.py`): ticker → CIK → every 10-K filing via the SEC submissions API. Cached, rate-limited, with the User-Agent SEC requires.
+2. **Extract** (`src/extract.py`): the table of contents also says "Item 1A Risk Factors", so the code takes the *longest* section that runs from an Item 1A heading to the next Item 1B / 1C / 2 heading (or the next Item 1A heading, so cross-references don't swallow other sections). Covered by unit tests.
+3. **Chunk**: paragraph-aware ~200-word passages; very long paragraphs are split at sentence ends.
+4. **Embed** (`embed_all.py`): `BAAI/bge-base-en-v1.5` sentence embeddings, cached so re-runs only embed changed passages.
+5. **Classify** (`build_results.py`): each passage is scored against short example sentences per category (`src/prototypes.py`), then a logistic-regression model trained on the hand-labelled passages picks the category.
+6. **Measure**: category share per report, change 2019 → 2025, and "new language" (2025 passages least similar to anything in the 2019 report).
 
-## Installation & How to Run
+## How the accuracy was measured (and why it is not higher)
+
+- 118 random passages were labelled by hand with help from an AI assistant (Claude). All labels are in `data/eval/` so anyone can check them.
+- **First attempt, zero-shot** (example sentences only): 80% on the passages used while writing the examples, but only **58% on a fresh sample**. The examples had been tuned to the first sample, so I froze the method and kept the fresh sample as an honest test.
+- **Final model**: logistic regression on embeddings + example-sentence scores, **69%** in 10-fold cross-validation.
+- 10-K filings repeat the same paragraph year after year. Plain cross-validation therefore tested the model on text it had already seen and reported 84%. Near-identical passages (cosine ≥ 0.9) are now kept in the same fold, which gives the honest 69%.
+
+## Limits
+
+- Many passages mention two risks at once; each gets one label.
+- Three companies only: this shows the method, not an industry-wide finding.
+- 118 labels is a small test set, so the accuracy has a margin of roughly ±8 points.
+- Not investment advice.
+
+## Run it yourself
 
 ```bash
-# 1. Create and activate a virtual environment
-python3 -m venv venv
-source venv/bin/activate      # on Windows: venv\Scripts\activate
-
-# 2. Install dependencies
-pip install -r requirements.txt
-
-# 3. Add your PDFs under data/raw pdf/<company>/ as described above
-
-# 4. Run the full pipeline
-python main.py
+pip install -r requirements-pipeline.txt
+python build_chunks.py      # downloads 21 filings from SEC (~150 MB, cached in data/sec/)
+python embed_all.py         # ~15 min on a laptop CPU, cached afterwards
+python build_results.py     # writes data/app/
+streamlit run app.py
+pytest
 ```
 
-Running `main.py` executes the full pipeline in order: PDF processing → topic modeling → report generation → visualizations → semantic shift report → evaluation report. Progress and any missing-file warnings are printed to the console as it runs.
+The live app only needs `requirements.txt` (Streamlit, pandas, Plotly) because it reads the precomputed files in `data/app/`.
 
-## Outputs
+## Project history
 
-All generated artifacts are written to `outputs/`:
+The first version (semester project) read PDFs and used BERTopic. A review showed its topics followed the *company*, not the *risk type* (one topic held 412 JPMorgan passages and 0 from Apple), and that JPMorgan's "risk" text actually came from the financial statements. It is kept in `legacy/` for reference.
 
-**Reports (text)**
-- `final_report.txt` — key findings and per-theme trend interpretation (increasing/decreasing/stable) across the reporting period
-- `semantic_evolution_report.txt` — 2019 vs. 2024 representative text side-by-side for each company/risk theme, with a qualitative interpretation of the shift
-- `model_evaluation_report.txt` — topic modeling diagnostics (outlier rate, topic count, label coverage)
+## Tech stack
 
-**Data (CSV)**
-- `final_topic_info.csv` — discovered topics with keyword representations and auto-assigned labels
-- `final_chunk_topics.csv` — every text chunk with its assigned topic
-- `final_temporal_topics.csv` — topic frequency by company/year
-- `final_labeled_topic_trends.csv` — topic frequency by company/year, aggregated under human-readable labels
-
-**Charts (PNG)**
-- `final_topic_evolution_chart.png` — risk theme frequency over time, all companies combined
-- `final_topic_heatmap.png` — risk theme intensity heatmap across years
-- `company_risk_theme_comparison.png` — risk theme totals compared across companies
-- `company_risk_volume_trend.png` — total risk-narrative volume per company over time
-
-**Extracted text**
-- `<company>_<year>_risk.txt` — the raw extracted Risk Factors section per filing, before chunking
-
-### Example output
-
-![Risk theme evolution chart](outputs/final_topic_evolution_chart.png)
-
-![Risk theme heatmap](outputs/final_topic_heatmap.png)
-
-## Limitations
-
-- Topic modeling is unsupervised — cluster quality depends on embedding and clustering hyperparameters, and results should be read as exploratory analysis, not ground truth.
-- Automatic topic labeling is keyword-based and may mislabel or leave topics as "Unclassified Risk" if they don't match the predefined keyword sets.
-- Results are analytical/academic in nature and are not intended as legal, financial, or investment advice.
+Python · requests · BeautifulSoup · sentence-transformers (bge-base) · scikit-learn · pandas · Plotly · Streamlit · pytest
