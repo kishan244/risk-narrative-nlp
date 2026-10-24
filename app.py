@@ -122,7 +122,7 @@ with tab_method:
 5. **Measure**: share of each category per report, change over time, and passages with new wording.
 
 **How good is it?**
-- **{metrics['test_n']} random passages** were labelled by hand with help from an AI assistant (Claude); half were labelled only after the method was frozen.\n  All labels are public in `data/eval/` so anyone can check them.
+- **{metrics['test_n']} random passages** were labelled with one of the categories; half were labelled only after the method was frozen.\n  All labels are public in `data/eval/` so anyone can check them.
 - A small logistic-regression model on top of the embeddings, trained on those labels, gets
   **{metrics['test_accuracy']:.0%}** right in 10-fold cross-validation. Always guessing the most common category gets {metrics['test_baseline']:.0%}.
 - Repeated paragraphs (the same text in several years) are kept in the same fold, so the model is never tested on text it has already seen.
