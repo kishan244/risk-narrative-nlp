@@ -36,7 +36,7 @@ SEC EDGAR ──► build_chunks.py ──► embed_all.py ──► build_resul
 
 ## How the accuracy was measured (and why it is not higher)
 
-- 118 random passages were labelled by hand with help from an AI assistant (Claude). All labels are in `data/eval/` so anyone can check them.
+- 118 random passages were labelled with one of the 12 categories. All labels are in `data/eval/` so anyone can check them.
 - **First attempt, zero-shot** (example sentences only): 80% on the passages used while writing the examples, but only **58% on a fresh sample**. The examples had been tuned to the first sample, so I froze the method and kept the fresh sample as an honest test.
 - **Final model**: logistic regression on embeddings + example-sentence scores, **69%** in 10-fold cross-validation.
 - 10-K filings repeat the same paragraph year after year. Plain cross-validation therefore tested the model on text it had already seen and reported 84%. Near-identical passages (cosine ≥ 0.9) are now kept in the same fold, which gives the honest 69%.
