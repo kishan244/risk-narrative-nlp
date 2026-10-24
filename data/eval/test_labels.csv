@@ -1,0 +1,61 @@
+ticker,year,chunk_id,label
+AAPL,2021,1,Operational & Business Continuity
+AAPL,2025,39,Competition & Demand
+AAPL,2023,33,Climate & ESG
+AAPL,2023,34,Climate & ESG
+AAPL,2025,41,Credit & Liquidity
+AAPL,2024,22,Competition & Demand
+AAPL,2023,11,Supply Chain & Manufacturing
+AAPL,2025,21,People & Key Personnel
+AAPL,2019,24,Cybersecurity & Data Privacy
+AAPL,2025,1,Macroeconomic & Market
+AAPL,2022,35,Regulatory & Legal
+AAPL,2023,31,Regulatory & Legal
+AAPL,2021,19,Product & Technology
+AAPL,2021,9,Competition & Demand
+AAPL,2025,8,Product & Technology
+AAPL,2020,22,Regulatory & Legal
+AAPL,2022,32,Regulatory & Legal
+AAPL,2023,14,Product & Technology
+AAPL,2025,6,Operational & Business Continuity
+AAPL,2020,5,Competition & Demand
+JPM,2024,78,Regulatory & Legal
+JPM,2025,16,Regulatory & Legal
+JPM,2023,13,Regulatory & Legal
+JPM,2022,42,Operational & Business Continuity
+JPM,2020,12,Regulatory & Legal
+JPM,2019,44,Cybersecurity & Data Privacy
+JPM,2022,52,Cybersecurity & Data Privacy
+JPM,2024,36,Credit & Liquidity
+JPM,2020,61,Operational & Business Continuity
+JPM,2021,36,Credit & Liquidity
+JPM,2024,85,Regulatory & Legal
+JPM,2023,73,Operational & Business Continuity
+JPM,2020,80,Regulatory & Legal
+JPM,2024,32,Credit & Liquidity
+JPM,2024,44,Cybersecurity & Data Privacy
+JPM,2021,30,Credit & Liquidity
+JPM,2025,42,Cybersecurity & Data Privacy
+JPM,2021,27,Macroeconomic & Market
+JPM,2024,5,Regulatory & Legal
+JPM,2020,76,Operational & Business Continuity
+TSLA,2019,38,Operational & Business Continuity
+TSLA,2025,54,Competition & Demand
+TSLA,2024,37,Product & Technology
+TSLA,2021,28,Cybersecurity & Data Privacy
+TSLA,2021,3,Supply Chain & Manufacturing
+TSLA,2023,43,Regulatory & Legal
+TSLA,2025,52,Regulatory & Legal
+TSLA,2024,53,Stock & Governance
+TSLA,2021,5,Supply Chain & Manufacturing
+TSLA,2019,7,Supply Chain & Manufacturing
+TSLA,2022,39,Climate & ESG
+TSLA,2020,18,Product & Technology
+TSLA,2021,46,Regulatory & Legal
+TSLA,2021,10,Supply Chain & Manufacturing
+TSLA,2020,7,Competition & Demand
+TSLA,2023,29,Cybersecurity & Data Privacy
+TSLA,2023,3,Supply Chain & Manufacturing
+TSLA,2025,61,Cybersecurity & Data Privacy
+TSLA,2024,44,Regulatory & Legal
+TSLA,2019,23,Product & Technology

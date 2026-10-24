@@ -17,3 +17,9 @@ venv/
 
 # Local tooling config
 .claude/
+
+# Downloaded 10-K HTML (re-created by build_chunks.py)
+data/sec/
+# Cached embeddings (re-created by embed_all.py)
+data/processed/embeddings.npy
+.pytest_cache/

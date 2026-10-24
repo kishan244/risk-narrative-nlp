@@ -1,0 +1,9 @@
+# Full pipeline: download, extract, embed, classify
+-r requirements.txt
+requests
+beautifulsoup4
+lxml
+numpy
+scikit-learn
+sentence-transformers
+pytest
