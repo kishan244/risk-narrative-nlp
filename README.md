@@ -1,6 +1,6 @@
 # Risk Radar: how companies' risk language changes over time
 
-**Live demo:** _link added after deploy_
+**Live demo:** https://risk-radar-kishan-v1.streamlit.app/
 
 An end-to-end NLP pipeline that downloads 10-K annual reports from **SEC EDGAR**, extracts the *Item 1A Risk Factors* section, sorts every passage into one of **12 risk categories**, and shows how each company's risk mix changed from **2019 to 2025** in a Streamlit app.
 
