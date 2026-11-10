@@ -1,27 +1,39 @@
-from src.extract import extract_risk_section, split_into_chunks
+import pytest
 
-TOC = "Item 1A. Risk Factors 5\nItem 1B. Unresolved Staff Comments 14\nItem 2. Properties 14\n"
-BODY = "Item 1A. Risk Factors\n\n" + ("Our business faces many serious risks that could hurt results. " * 60) + "\n\nItem 1B. Unresolved Staff Comments\nNone."
-
-
-def test_skips_table_of_contents():
-    section = extract_risk_section(TOC + "\n\nItem 1. Business\nWe make phones.\n\n" + BODY)
-    assert section.startswith("Our business faces")
-    assert "Unresolved" not in section
-    assert "We make phones" not in section
+from riskradar.extract import ExtractionError, extract_risk_section, html_to_text, risk_section_from_html
+from tests.conftest import make_10k_html
 
 
-def test_cross_reference_does_not_swallow_business_section():
-    text = TOC + "Item 1. Business\nSee Item 1A Risk Factors for details. We make phones.\n\n" + BODY
-    section = extract_risk_section(text)
-    assert "We make phones" not in section
+def test_finds_real_section_not_table_of_contents(ten_k_html):
+    section = risk_section_from_html(ten_k_html)
+    assert section.startswith("Our business depends")
+    assert "Unresolved" not in section and "We own a large building" not in section
 
 
-def test_chunks_have_reasonable_size():
-    chunks = split_into_chunks(BODY.split("\n\n", 1)[1].rsplit("\n\n", 1)[0])
-    assert chunks
-    assert all(60 <= len(c.split()) <= 400 for c in chunks)
+def test_cross_reference_is_not_a_heading(ten_k_html):
+    assert "We make phones" not in risk_section_from_html(ten_k_html)
+    assert "sell services to many customers" not in risk_section_from_html(ten_k_html)
 
 
-def test_empty_when_no_section():
-    assert extract_risk_section("Nothing here") == ""
+def test_hidden_xbrl_is_dropped(ten_k_html):
+    assert "hidden xbrl metadata" not in html_to_text(ten_k_html)
+
+
+def test_heading_split_over_table_cells_is_one_line():
+    text = html_to_text("<table><tr><td>Item 1A.</td><td>Risk Factors</td></tr></table>")
+    assert "Item 1A. Risk Factors" in text
+
+
+def test_short_section_raises_clear_error():
+    with pytest.raises(ExtractionError, match="Item 1A"):
+        risk_section_from_html(make_10k_html(risk_paragraphs=2))
+
+
+def test_no_section_returns_empty_string():
+    assert extract_risk_section("Nothing useful here") == ""
+
+
+def test_section_can_end_at_cybersecurity_item():
+    risks = "A real risk sentence that is long enough. " * 50
+    text = "Item 1A. Risk Factors\n" + risks + "\nItem 1C. Cybersecurity\nOur program."
+    assert "Our program" not in extract_risk_section(text)
