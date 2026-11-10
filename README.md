@@ -118,11 +118,11 @@ tests/                 40 tests: extraction, SEC client, classifier, data checks
 legacy/                the first version of this project (kept for history)
 ```
 
-## History
+## How the project improved
 
-- **v1** read PDFs and used BERTopic. A check showed the topics followed the company, not the risk type, and that part of the input text was not risk text at all. It is kept in `legacy/`.
-- **v2** moved to SEC EDGAR, proper section extraction and a classifier for 3 companies.
-- **v3** (this version): 20 companies, a 7× larger labelled set with a strict test protocol, a 17× faster model, live analysis of any ticker, tests, CI and a monthly data refresh.
+- **Started** as a semester project that read PDFs and used BERTopic. A check showed the topics followed the company, not the risk type, and that part of the input text was not risk text at all. That code is kept in `legacy/`.
+- **Rebuilt** on SEC EDGAR with proper section extraction and a classifier, first for 3 companies.
+- **Scaled** to 20 companies (21 → 144 reports) with a 7× larger labelled set and a strict test protocol. More labelled passages raised test accuracy from 67% to 74.5%, and a 17× faster model made live analysis of any ticker possible. Tests, CI and a monthly data refresh were added.
 
 ## Tech
 
