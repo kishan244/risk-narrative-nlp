@@ -1,0 +1,5 @@
+# Development: training, tests and linting.
+-r requirements.txt
+scikit-learn==1.9.1
+pytest
+ruff

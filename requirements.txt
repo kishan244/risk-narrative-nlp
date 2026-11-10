@@ -1,5 +1,9 @@
-# Live app only (Streamlit Community Cloud installs this file). Versions tested on Python 3.13.
+# Runtime: everything the Streamlit app needs (also enough to run `python -m riskradar build`).
 streamlit==1.66.1
 pandas==3.0.5
+numpy==2.5.3
 plotly==7.1.0
 pyarrow==26.0.0
+requests==2.34.2
+lxml==6.1.3
+fastembed==0.9.1
