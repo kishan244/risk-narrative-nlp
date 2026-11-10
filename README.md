@@ -1,70 +1,129 @@
-# Risk Radar: how companies' risk language changes over time
+# Risk Radar
 
-**Live demo:** https://risk-radar-kishan-v1.streamlit.app/
+[![CI](https://github.com/kishan244/risk-narrative-nlp/actions/workflows/ci.yml/badge.svg)](https://github.com/kishan244/risk-narrative-nlp/actions/workflows/ci.yml)
+[![Live demo](https://img.shields.io/badge/live%20demo-open%20the%20app-2a78d6)](https://risk-radar-kishan-v1.streamlit.app/)
+![Python](https://img.shields.io/badge/python-3.11%2B-3776ab)
 
-An end-to-end NLP pipeline that downloads 10-K annual reports from **SEC EDGAR**, extracts the *Item 1A Risk Factors* section, sorts every passage into one of **12 risk categories**, and shows how each company's risk mix changed from **2019 to 2025** in a Streamlit app.
+**What do big US companies say could go wrong, and how is that changing?**
 
-Companies: **Apple, JPMorgan Chase, Tesla** (a phone maker, a bank and a car maker, so the method has to work across very different industries).
+Risk Radar is an end-to-end NLP pipeline. It downloads annual reports (10-K) from the SEC, finds the
+*Risk Factors* section, sorts every passage into one of 13 risk types, and shows the trends in a web app.
+You can also type **any US stock ticker** and watch the whole pipeline run live in a few seconds.
 
-## Key results
+**[Open the live app →](https://risk-radar-kishan-v1.streamlit.app/)**
+
+![Live analysis of a ticker](docs/live-analysis.gif)
+
+## What the data shows
 
 | | |
 |---|---|
-| Reports analysed | 21 official 10-K filings (3 companies × 7 fiscal years, 2019–2025) |
-| Passages | 1,287 (~200 words each, split on paragraph and sentence borders) |
-| Classifier accuracy | **69%** in 10-fold cross-validation on 118 hand-labelled passages (most-common-class baseline: 25%) |
-| Apple | Regulatory & legal risk grew the most: **17% → 32%** of the risk section |
-| Tesla | Product & technology risk up **+10 points** (FSD, robotaxi, Optimus); supply-chain risk down **−7 points** |
-| JPMorgan | Cybersecurity up **+6 points**; 2025 report adds new language on generative and agentic AI |
+| **AI became a standard risk** | In 2019, 5 of 20 companies mentioned AI in their risk factors. In 2025, all 20 do. The share of passages that mention AI went from 1% to 15%. |
+| **Most risk text is copy-paste** | On average 67% of sentences are repeated word for word from the year before. The most rewriting happened in 2020 (39% new sentences), the first COVID year. |
+| **Each sector has its own worry** | Health care: regulation and lawsuits (36% of the section). Energy: climate (25%). Autos and industrials: supply chain (15%). Banks: credit and funding (16%). |
 
-Shares, not raw counts, are used everywhere, so a longer report does not look "riskier" just because it is longer.
+![Overview tab](docs/overview.png)
 
-## Pipeline
+## Numbers
 
+| | |
+|---|---|
+| Companies | 20, in 6 sectors (`companies.toml`) |
+| Annual reports | 144, fiscal years 2019 to 2026 |
+| Passages classified | 9,006 |
+| Labelled passages | 884 (684 train, 200 test), with a written [labelling guide](data/eval/LABELING_GUIDE.md) |
+| **Test accuracy** | **74.5%** on 200 unseen passages (95% range 68–80%). Most-common-class baseline: 16% |
+| Right label in top 2 | 84% |
+| Live analysis of a new ticker | about 5 seconds on a laptop CPU |
+| Tests | 40, run on every pull request |
+
+## How it works
+
+```mermaid
+flowchart LR
+    A[SEC EDGAR<br/>10-K HTML] --> B[Extract<br/>Item 1A Risk Factors]
+    B --> C[Split into<br/>~170-word passages]
+    C --> D[Embed<br/>MiniLM, ONNX]
+    D --> E[Classify<br/>logistic regression]
+    E --> F[Shares, trends,<br/>themes, text reuse]
+    F --> G[Streamlit app]
+    L[(884 labelled<br/>passages)] -. train + test .-> E
 ```
-SEC EDGAR ──► build_chunks.py ──► embed_all.py ──► build_results.py ──► app.py (Streamlit)
-  10-K HTML     Item 1A text,       bge-base          classify, shares,     5 interactive views
-                ~200-word chunks    embeddings        new language, metrics
-```
 
-1. **Download** (`src/sec_fetch.py`): ticker → CIK → every 10-K filing via the SEC submissions API. Cached, rate-limited, with the User-Agent SEC requires.
-2. **Extract** (`src/extract.py`): the table of contents also says "Item 1A Risk Factors", so the code takes the *longest* section that runs from an Item 1A heading to the next Item 1B / 1C / 2 heading (or the next Item 1A heading, so cross-references don't swallow other sections). Covered by unit tests.
-3. **Chunk**: paragraph-aware ~200-word passages; very long paragraphs are split at sentence ends.
-4. **Embed** (`embed_all.py`): `BAAI/bge-base-en-v1.5` sentence embeddings, cached so re-runs only embed changed passages.
-5. **Classify** (`build_results.py`): each passage is scored against short example sentences per category (`src/prototypes.py`), then a logistic-regression model trained on the hand-labelled passages picks the category.
-6. **Measure**: category share per report, change 2019 → 2025, and "new language" (2025 passages least similar to anything in the 2019 report).
+| Step | Module | What it does |
+|---|---|---|
+| Download | `riskradar/sec.py` | Ticker → company ID → every 10-K, from the free SEC EDGAR API. Polite rate limit, retries, clear errors. |
+| Extract | `riskradar/extract.py` | Finds the real *Item 1A* heading. The same words also appear in the table of contents and in cross-references, so only matches at the start of a line count and the longest candidate wins. |
+| Split | `riskradar/chunk.py` | Passages of about 170 words along sentence borders, sized to fit the model's 256-token window. |
+| Embed | `riskradar/embed.py` | `all-MiniLM-L6-v2` through ONNX Runtime (no PyTorch). Disk cache keyed by text, so a re-run only embeds new passages. |
+| Classify | `riskradar/classify.py` | Multinomial logistic regression. Only the weights are stored (25 KB), so predicting needs NumPy alone. |
+| Train + test | `riskradar/train.py` | Trains on `data/eval/labels.csv` and scores once on the held-out test set. |
+| Build | `riskradar/build.py` | Runs everything for all companies and writes the small files the app reads (`data/app/`). |
+| Live | `riskradar/analyze.py` | The same pipeline for one ticker, used by the app's live tab and the CLI. |
 
-## How the accuracy was measured (and why it is not higher)
+## How the accuracy was measured
 
-- 118 random passages were labelled with one of the 12 categories. All labels are in `data/eval/` so anyone can check them.
-- **First attempt, zero-shot** (example sentences only): 80% on the passages used while writing the examples, but only **58% on a fresh sample**. The examples had been tuned to the first sample, so I froze the method and kept the fresh sample as an honest test.
-- **Final model**: logistic regression on embeddings + example-sentence scores, **69%** in 10-fold cross-validation.
-- 10-K filings repeat the same paragraph year after year. Plain cross-validation therefore tested the model on text it had already seen and reported 84%. Near-identical passages (cosine ≥ 0.9) are now kept in the same fold, which gives the honest 69%.
+A number is only worth something if the test is fair, so the test is strict:
+
+1. **A random test set.** 200 passages, 10 per company, drawn at random. They are never used to train or to choose a setting.
+2. **No leaks through copy-paste.** 10-K filings repeat paragraphs every year. Any training passage that is a near-copy of a test passage (cosine similarity ≥ 0.9) is removed from training. This removed 17 passages.
+3. **Settings chosen without the test set.** The regularisation strength is picked by cross-validation on the training set only.
+4. **Scored once per round.** Round 1 (339 training passages) scored 67%. Round 2 added 328 training passages, chosen where the model was least sure, and scored 74.5%. Nothing else was changed between the two rounds.
+
+Per-category scores, the confusion matrix and accuracy per sector are in the app's *Method & accuracy* tab and in `models/metrics.json`.
+
+## Design decisions
+
+- **A small model on purpose.** `bge-small` and `bge-base` gave no better accuracy in cross-validation but were 17× and 60× slower. The small model makes the live tab possible on free hosting.
+- **Shares, not counts.** A longer report would otherwise look riskier just because it is longer.
+- **Keyword themes stay simple.** "How many companies mention AI?" is answered with a transparent keyword rule, not a model.
+- **Text reuse is measured on sentences.** Sentences are compared after dropping spaces and punctuation, so a company that changes how it writes its own name does not look like it rewrote everything.
+- **A ticker is not a company ID.** ExxonMobil's ticker now points to a new legal entity without old filings, so `companies.toml` can pin the SEC company ID.
+- **Fiscal years are lined up.** Year-ends in January or February (Walmart, NVIDIA) count as the year before.
 
 ## Limits
 
-- Many passages mention two risks at once; each gets one label.
-- Three companies only: this shows the method, not an industry-wide finding.
-- 118 labels is a small test set, so the accuracy has a margin of roughly ±8 points.
-- Not investment advice.
+- One label per passage. About one passage in four covers two risks, which is why top-2 accuracy (84%) is much higher than accuracy (74.5%).
+- Energy companies are the weak spot (45% on 20 test passages). Their passages pack several topics together.
+- 20 large US companies are a sample, not the market.
+- The app measures what companies write about, not how likely a risk is. Not investment advice.
 
 ## Run it yourself
 
 ```bash
-pip install -r requirements-pipeline.txt
-python build_chunks.py      # downloads 21 filings from SEC (~150 MB, cached in data/sec/)
-python embed_all.py         # ~15 min on a laptop CPU, cached afterwards
-python build_results.py     # writes data/app/
-streamlit run app.py
-pytest
+pip install -r requirements-dev.txt
+
+python -m riskradar analyze NFLX   # full pipeline for one ticker, about 5 seconds
+streamlit run app.py               # the web app
+
+python -m riskradar build          # rebuild all data (downloads 144 filings on the first run)
+python -m riskradar train          # retrain and re-score the classifier
+make lint test                     # ruff + 40 tests
 ```
 
-The live app only needs `requirements.txt` (Streamlit, pandas, Plotly) because it reads the precomputed files in `data/app/`.
+Add a company: put its ticker in `companies.toml` and run `python -m riskradar build`.
 
-## Project history
+A scheduled GitHub Action (`.github/workflows/refresh.yml`) looks for new filings once a month. If it finds any, it rebuilds the data and pushes a branch for review.
 
-The first version (semester project) read PDFs and used BERTopic. A review showed its topics followed the *company*, not the *risk type* (one topic held 412 JPMorgan passages and 0 from Apple), and that JPMorgan's "risk" text actually came from the financial statements. It is kept in `legacy/` for reference.
+## Project layout
 
-## Tech stack
+```
+app.py                 Streamlit app (6 tabs)
+companies.toml         the 20 companies
+riskradar/             the pipeline as a Python package (+ CLI)
+data/app/              small precomputed files the app reads
+data/eval/             labelled passages and the labelling guide
+models/                classifier weights and test metrics
+tests/                 40 tests: extraction, SEC client, classifier, data checks, app smoke test
+legacy/                the first version of this project (kept for history)
+```
 
-Python · requests · BeautifulSoup · sentence-transformers (bge-base) · scikit-learn · pandas · Plotly · Streamlit · pytest
+## History
+
+- **v1** read PDFs and used BERTopic. A check showed the topics followed the company, not the risk type, and that part of the input text was not risk text at all. It is kept in `legacy/`.
+- **v2** moved to SEC EDGAR, proper section extraction and a classifier for 3 companies.
+- **v3** (this version): 20 companies, a 7× larger labelled set with a strict test protocol, a 17× faster model, live analysis of any ticker, tests, CI and a monthly data refresh.
+
+## Tech
+
+Python · pandas · NumPy · scikit-learn · ONNX Runtime (fastembed) · lxml · Plotly · Streamlit · pytest · ruff · GitHub Actions
