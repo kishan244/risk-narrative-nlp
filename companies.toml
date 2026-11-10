@@ -1,0 +1,25 @@
+# Companies in the precomputed dataset. Add a ticker here and run `python -m riskradar build`.
+start_year = 2019
+
+company = [
+  { ticker = "AAPL",  name = "Apple",             sector = "Technology" },
+  { ticker = "MSFT",  name = "Microsoft",         sector = "Technology" },
+  { ticker = "NVDA",  name = "NVIDIA",            sector = "Technology" },
+  { ticker = "GOOGL", name = "Alphabet",          sector = "Technology" },
+  { ticker = "META",  name = "Meta",              sector = "Technology" },
+  { ticker = "AMZN",  name = "Amazon",            sector = "Consumer" },
+  { ticker = "WMT",   name = "Walmart",           sector = "Consumer" },
+  { ticker = "KO",    name = "Coca-Cola",         sector = "Consumer" },
+  { ticker = "NKE",   name = "Nike",              sector = "Consumer" },
+  { ticker = "TSLA",  name = "Tesla",             sector = "Autos & Industrials" },
+  { ticker = "GM",    name = "General Motors",    sector = "Autos & Industrials" },
+  { ticker = "BA",    name = "Boeing",            sector = "Autos & Industrials" },
+  { ticker = "JPM",   name = "JPMorgan Chase",    sector = "Financials" },
+  { ticker = "GS",    name = "Goldman Sachs",     sector = "Financials" },
+  { ticker = "V",     name = "Visa",              sector = "Financials" },
+  { ticker = "PFE",   name = "Pfizer",            sector = "Health Care" },
+  { ticker = "JNJ",   name = "Johnson & Johnson", sector = "Health Care" },
+  { ticker = "UNH",   name = "UnitedHealth",      sector = "Health Care" },
+  { ticker = "XOM",   name = "ExxonMobil",        sector = "Energy", cik = "0000034088" },
+  { ticker = "CVX",   name = "Chevron",           sector = "Energy" },
+]

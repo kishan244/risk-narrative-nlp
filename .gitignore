@@ -1,26 +1,10 @@
-# Raw SEC filings (large, third-party PDFs — not published)
-data/raw pdf/
-
-# Draft / exploration scripts (kept local, not published)
-experiments/
-
-# Python
 __pycache__/
 *.pyc
-
-# macOS
+.venv/
+venv/
+.pytest_cache/
+.ruff_cache/
 .DS_Store
 
-# Virtual environment / secrets
-venv/
-.env
-
-# Local tooling config
-.claude/
-
-# Downloaded 10-K HTML (re-created by build_chunks.py)
-data/sec/
-# Cached embeddings (re-created by embed_all.py)
-data/processed/embeddings.npy
-.pytest_cache/
-data/processed/embedded_texts.parquet
+# Re-created by `python -m riskradar build`: downloaded risk sections, raw HTML, embeddings
+data/cache/
